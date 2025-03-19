@@ -1,116 +1,92 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // デフォルト値を設定
-  const defaultBlockWords = 'しばらく観察していると\n紹介したこのブロガー\n彼の指導のもと';
-  const defaultShowConfirmDialog = true;
-
+document.addEventListener("DOMContentLoaded", function () {
+    var t = document.getElementById("blockWords"),
+        e = document.getElementById("showConfirmDialog"),
+        s = document.getElementById("saveButton"),
+        n = document.getElementById("status");
   
-  // UI要素
-  const blockWordsTextarea = document.getElementById('blockWords');
-  const showConfirmDialogCheckbox = document.getElementById('showConfirmDialog');
-
-  const saveButton = document.getElementById('saveButton');
-  const statusMessage = document.getElementById('status');
-  const formGroups = document.querySelectorAll('.form-group');
-  
-  // フォームグループにアニメーション効果を追加
-  formGroups.forEach((group, index) => {
-    group.style.opacity = '0';
-    group.style.transform = 'translateY(10px)';
-    
-    setTimeout(() => {
-      group.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      group.style.opacity = '1';
-      group.style.transform = 'translateY(0)';
-    }, 100 * (index + 1));
-  });
-  
-  // 保存されている設定を読み込む
-  chrome.storage.sync.get(['blockWords', 'showConfirmDialog'], function(result) {
-    const blockWords = result.blockWords || defaultBlockWords;
-    blockWordsTextarea.value = blockWords;
-    
-    const showConfirmDialog = result.showConfirmDialog !== undefined ? result.showConfirmDialog : defaultShowConfirmDialog;
-    showConfirmDialogCheckbox.checked = showConfirmDialog;
-    
-
-    
-    // テキストエリアにフォーカスアニメーション
-    blockWordsTextarea.addEventListener('focus', function() {
-      this.parentElement.style.transform = 'scale(1.01)';
+    // フェードインアニメーション
+    document.querySelectorAll(".form-group").forEach(function (t, e) {
+      t.style.opacity = "0";
+      t.style.transform = "translateY(10px)";
+      setTimeout(function () {
+        t.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+        t.style.opacity = "1";
+        t.style.transform = "translateY(0)";
+      }, 100 * (e + 1));
     });
-    
-    blockWordsTextarea.addEventListener('blur', function() {
-      this.parentElement.style.transform = 'scale(1)';
-    });
-  });
   
-  // 保存ボタンのクリックイベント
-  saveButton.addEventListener('click', function() {
-    // ボタンにクリックエフェクト
-    this.classList.add('clicked');
-    
-    // ボタンのテキストを変更
-    const originalText = this.textContent;
-    this.textContent = '保存中...';
-    
-    const blockWords = blockWordsTextarea.value;
-    const showConfirmDialog = showConfirmDialogCheckbox.checked;
-
-    
-    // 設定を保存
-    chrome.storage.sync.set({
-      blockWords: blockWords,
-      showConfirmDialog: showConfirmDialog
-    }, function() {
-      // 保存完了メッセージを表示
-      statusMessage.style.display = 'block';
-      statusMessage.style.opacity = '0';
-      statusMessage.style.transform = 'translateY(10px)';
-      
-      setTimeout(() => {
-        statusMessage.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        statusMessage.style.opacity = '1';
-        statusMessage.style.transform = 'translateY(0)';
-      }, 10);
-      
-      // ボタンのテキストを元に戻す
-      saveButton.textContent = '保存完了！';
-      
-      setTimeout(function() {
-        saveButton.textContent = originalText;
-        saveButton.classList.remove('clicked');
-        statusMessage.style.opacity = '0';
-        statusMessage.style.transform = 'translateY(10px)';
-        
-        setTimeout(() => {
-          statusMessage.style.display = 'none';
+    // `chrome.storage.sync` を `browser.storage.sync` に対応
+    const storage = chrome?.storage || browser.storage;
+  
+    storage.sync.get(["blockWords", "showConfirmDialog"]).then((s) => {
+      var n = s.blockWords || "しばらく観察していると\n紹介したこのブロガー\n彼の指導のもと";
+      t.value = n;
+      var o = s.showConfirmDialog === undefined || s.showConfirmDialog;
+      e.checked = o;
+  
+      // フォーカス時のエフェクト
+      t.addEventListener("focus", function () {
+        this.parentElement.style.transform = "scale(1.01)";
+      });
+      t.addEventListener("blur", function () {
+        this.parentElement.style.transform = "scale(1)";
+      });
+    });
+  
+    // 保存ボタンの処理
+    s.addEventListener("click", function () {
+      this.classList.add("clicked");
+      var o = this.textContent;
+      this.textContent = "保存中...";
+      var a = t.value,
+          r = e.checked;
+  
+      storage.sync.set({ blockWords: a, showConfirmDialog: r }).then(() => {
+        n.style.display = "block";
+        n.style.opacity = "0";
+        n.style.transform = "translateY(10px)";
+        setTimeout(function () {
+          n.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+          n.style.opacity = "1";
+          n.style.transform = "translateY(0)";
+        }, 10);
+  
+        s.textContent = "保存完了！";
+        setTimeout(function () {
+          s.textContent = o;
+          s.classList.remove("clicked");
+          n.style.opacity = "0";
+          n.style.transform = "translateY(10px)";
+          setTimeout(function () {
+            n.style.display = "none";
+          }, 300);
+        }, 2000);
+      });
+    });
+  
+    // バージョン情報を表示
+    const runtime = chrome?.runtime || browser.runtime;
+    var o = runtime.getManifest(),
+        a = document.getElementById("version");
+  
+    if (a && o.version) {
+      a.textContent = "XKusoRepFilter v" + o.version;
+      a.style.opacity = "0";
+      a.style.transform = "translateY(5px)";
+      setTimeout(function () {
+        a.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+        a.style.opacity = "1";
+        a.style.transform = "translateY(0)";
+      }, 500);
+  
+      // クリック時のエフェクト
+      a.addEventListener("click", function () {
+        var t = this;
+        this.style.transform = "scale(1.1)";
+        setTimeout(function () {
+          t.style.transform = "scale(1)";
         }, 300);
-      }, 2000);
-    });
+      });
+    }
   });
   
-  // バージョン情報を表示
-  const manifestData = chrome.runtime.getManifest();
-  const versionElement = document.getElementById('version');
-  if (versionElement && manifestData.version) {
-    versionElement.textContent = `XKusoRepFilter v${manifestData.version}`;
-    
-    // バージョン表示にアニメーション効果を追加
-    versionElement.style.opacity = '0';
-    versionElement.style.transform = 'translateY(5px)';
-    
-    setTimeout(() => {
-      versionElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      versionElement.style.opacity = '1';
-      versionElement.style.transform = 'translateY(0)';
-    }, 500);
-    
-    // クリックでバージョン情報のアニメーション
-    versionElement.addEventListener('click', function() {
-      this.style.transform = 'scale(1.1)';
-      setTimeout(() => {
-        this.style.transform = 'scale(1)';
-      }, 300);
-    });
-  }
-});
