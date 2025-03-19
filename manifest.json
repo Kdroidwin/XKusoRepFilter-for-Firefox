@@ -3,7 +3,7 @@
   "name": "XKusoRepFilter",
   "version": "1.4.2",
   "description": "X（旧Twitter）で特定の文字列を含む投稿をブロックする拡張機能",
-  "permissions": ["storage"],
+  "permissions": ["storage", "activeTab"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
@@ -15,10 +15,16 @@
     }
   ],
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"],
+    "persistent": true
   },
   "icons": {
     "48": "icon.png",
     "128": "icon.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "your-extension@example.com"
+    }
   }
 }
