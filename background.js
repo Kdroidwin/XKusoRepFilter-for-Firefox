@@ -1,19 +1,15 @@
-// 拡張機能がインストールされた時に実行される
-chrome.runtime.onInstalled.addListener(function() {
-  // デフォルト設定を保存
-  chrome.storage.sync.get(['blockWords', 'showConfirmDialog'], function(result) {
-    let updates = {};
-    
-    if (!result.blockWords) {
-      updates.blockWords = 'しばらく観察していると';
-    }
-    
-    if (result.showConfirmDialog === undefined) {
-      updates.showConfirmDialog = true;
-    }
-    
-    if (Object.keys(updates).length > 0) {
-      chrome.storage.sync.set(updates);
-    }
+browser.runtime.onInstalled.addListener(function () {
+    browser.storage.sync.get(["blockWords", "showConfirmDialog"]).then((o) => {
+      let e = {};
+      if (!o.blockWords) {
+        e.blockWords = "しばらく観察していると";
+      }
+      if (o.showConfirmDialog === undefined) {
+        e.showConfirmDialog = true;
+      }
+      if (Object.keys(e).length > 0) {
+        browser.storage.sync.set(e);
+      }
+    });
   });
-});
+  
