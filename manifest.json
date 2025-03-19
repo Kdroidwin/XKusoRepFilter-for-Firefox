@@ -14,17 +14,13 @@
       "js": ["content.js"]
     }
   ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": true
-  },
   "icons": {
     "48": "icon.png",
     "128": "icon.png"
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "your-extension@example.com"
+      "id": "XKusoRepFilter@example.com"
     }
   }
 }
