@@ -4,7 +4,7 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/GOROman/XKusoRepFilter)
 ![GitHub](https://img.shields.io/github/license/GOROman/XKusoRepFilter)
 
-X（旧Twitter）で特定の文字列「しばらく観察していると」などを含む投稿をブロックするChrome拡張機能です。
+X（旧Twitter）で特定の文字列「しばらく観察していると」などを含む投稿をブロックするFirefox拡張機能です。
 
 ![alt text](docs/image.png)
 
