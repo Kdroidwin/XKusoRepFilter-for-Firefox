@@ -23,12 +23,13 @@ X（旧Twitter）で特定の文字列「しばらく観察していると」な
 
 ### リリースからインストール
 
-1. [Releasesページ](https://github.com/GOROman/XKusoRepFilter/releases)から最新の拡張機能パッケージ（.zip）をダウンロード
-2. ファイルを解凍
-3. Chromeで `chrome://extensions/` を開く
-4. 右上の「デベロッパーモード」をオンにする
-5. 「パッケージ化されていない拡張機能を読み込む」をクリック
-6. 解凍したフォルダを選択
+手動インストール
+
+1. Releasesページから最新の .zipファイルをダウンロード
+2. Firefoxで about:addons を開く
+3. 右上の歯車アイコンをクリックし、「ファイルからアドオンをインストール」を選択
+4. ダウンロードした .zip ファイルを選択
+5. インストールを許可し、拡張機能を有効化
 
 ### ソースからインストール
 
@@ -44,10 +45,8 @@ X（旧Twitter）で特定の文字列「しばらく観察していると」な
    ```
    npm run build
    ```
-4. Chromeで `chrome://extensions/` を開く
-5. 右上の「デベロッパーモード」をオンにする
-6. 「パッケージ化されていない拡張機能を読み込む」をクリック
-7. `dist` フォルダを選択
+4. Firefoxで about:debugging#/runtime/this-firefox を開く
+5. 「一時的なアドオンを読み込む」をクリックし、dist フォルダ内の manifest.json を選択
 
 ## 使い方
 
