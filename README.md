@@ -21,6 +21,8 @@ X（旧Twitter）で特定の文字列「しばらく観察していると」な
 
 ## インストール方法
 
+https://addons.mozilla.org/ja/firefox/addon/xkusorepfilter/
+
 ### リリースからインストール
 
 手動インストール
